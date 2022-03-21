@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
    /* Create a new AuthController instance.
@@ -14,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','signup']]);
     }
 
     /**
@@ -55,6 +57,30 @@ class AuthController extends Controller
         $this->guard()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+
+    public function signup(Request $request){
+        $validateData = $request->validate([
+
+            'email' => 'required|unique:users|max:255',
+            'name' => 'required',
+            'password' =>'required|min:6|confirmed'
+
+        ]);
+
+        $data = array();
+
+        $data['name'] =$request->name;
+        $data['email'] =$request->email;
+        $data['password'] =Hash::make($request->password);
+        DB::table('users')->insert($data);
+
+        return $this->login($request);
+
+
+
+
     }
 
     /**
