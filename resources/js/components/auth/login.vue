@@ -8,19 +8,19 @@
               <div class="col-xl-12">
                 <div class="auth-form">
                   <h4 class="text-center mb-4">Sign in System</h4>
-                  <form action="">
+                  <form action="" @submit.prevent=login>
                     <div class="form-group">
                       <label><strong>Email</strong></label>
                       <input
                         type="email"
                         placeholder="Enter mail address"
                         class="form-control"
-                        value=""
+                    v-model="form.email"
                       />
                     </div>
                     <div class="form-group">
                       <label><strong>Password</strong></label>
-                      <input type="password" class="form-control" value="" />
+                      <input type="password" class="form-control" v-model="form.password" />
                     </div>
                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
                       <div class="form-group">
@@ -35,10 +35,8 @@
                           >
                         </div>
                       </div>
-                      <div class="form-group">
-                        <router-link to="/forget">Forget-password</router-link>
-                      </div>
-                    </div>
+
+                    </div>=
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary btn-block">
                         Sign me in
@@ -59,7 +57,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+
+    data(){
+        return{
+            form:{
+            email:null,
+            password:null
+
+            }
+
+        }
+    },
+    methods: {
+        login(){
+        alert('get');
+
+      }
+
+    },
+
+};
 </script>
 
 <style>
