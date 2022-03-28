@@ -2157,7 +2157,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
-      alert('get');
+      axios.post('/api/auth/login', this.form).then(function (response) {
+        return console.log(response.data);
+      })["catch"](function (error) {
+        return console.log(error.response.data);
+      });
     }
   }
 });

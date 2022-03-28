@@ -66,12 +66,13 @@ export default {
             password:null
 
             }
-
         }
     },
     methods: {
-        login(){
-        alert('get');
+            login(){
+        axios.post('/api/auth/login',this.form)
+        .then(response => console.log(response.data))
+        .catch(error =>console.log(error.response.data))
 
       }
 
