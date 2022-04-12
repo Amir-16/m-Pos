@@ -13,7 +13,8 @@ Vue.use(VueRouter)
 
 // Router Imported
 import {routes} from './routes';
-
+import User from './Helpers/User';
+Window.User = User;
 
 const router = new VueRouter({
     mode: 'history',

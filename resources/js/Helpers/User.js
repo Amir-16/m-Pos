@@ -1,5 +1,5 @@
 import Token from './Token'
-import AppStorage from './AppStorage'
+import AppStorage from './AppStorage';
 
 
 class User{

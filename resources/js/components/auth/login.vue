@@ -69,9 +69,10 @@ export default {
         }
     },
     methods: {
+
             login(){
         axios.post('/api/auth/login',this.form)
-        .then(response => console.log(response.data))
+        .then(response => User.responseAfterLogin(response))
         .catch(error =>console.log(error.response.data))
 
       }
@@ -83,6 +84,7 @@ export default {
 
 <style>
 .card-body {
+  
   background-color: #050a14;
 }
 </style>
