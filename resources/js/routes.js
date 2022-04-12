@@ -15,6 +15,6 @@ let home = require('./components/home.vue').default;
  export const routes = [
     { path: '/', component: login,name:'/' },
     { path: '/register', component: register, name: 'register' },
-     { path: '/forget', component: forget, name: 'forget' },
+    { path: '/forget', component: forget, name: 'forget' },
     {path:'/dashboard',component:home, name:'home'}
 ]

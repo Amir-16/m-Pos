@@ -72,7 +72,11 @@ export default {
 
             login(){
         axios.post('/api/auth/login',this.form)
-        .then(response => User.responseAfterLogin(response))
+        .then( res =>{
+            User.responseAfterLogin(res)
+            this.$router.push({ name: "home" });
+
+        })
         .catch(error =>console.log(error.response.data))
 
       }
@@ -84,7 +88,7 @@ export default {
 
 <style>
 .card-body {
-  
+
   background-color: #050a14;
 }
 </style>
