@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="authincation h-100">
     <div class="container-fluid h-100">
@@ -8,19 +10,23 @@
               <div class="col-xl-12">
                 <div class="auth-form">
                   <h4 class="text-center mb-4">Sign in System</h4>
-                  <form action="" @submit.prevent=login>
+                  <form action="" @submit.prevent="login">
                     <div class="form-group">
                       <label><strong>Email</strong></label>
                       <input
                         type="email"
                         placeholder="Enter mail address"
                         class="form-control"
-                    v-model="form.email"
+                        v-model="form.email"
                       />
                     </div>
                     <div class="form-group">
                       <label><strong>Password</strong></label>
-                      <input type="password" class="form-control" v-model="form.password" />
+                      <input
+                        type="password"
+                        class="form-control"
+                        v-model="form.password"
+                      />
                     </div>
                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
                       <div class="form-group">
@@ -35,8 +41,8 @@
                           >
                         </div>
                       </div>
-
-                    </div>=
+                    </div>
+                    =
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary btn-block">
                         Sign me in
@@ -58,37 +64,34 @@
 
 <script>
 export default {
+    created() {
+    if (User.loggedIn()) {
+      this.$router.push({ name: "home" });
+    }
+  },
 
-    data(){
-        return{
-            form:{
-            email:null,
-            password:null
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null,
+      },
+    };
+  },
+  methods: {
+    login() {
+      axios.post("/api/auth/login", this.form)
+      .then(res=> User.responseAfterLogin(res))
+      .catch(error=>console.log(error.response.data))
 
-            }
-        }
-    },
-    methods: {
-
-            login(){
-        axios.post('/api/auth/login',this.form)
-        .then( res =>{
-            User.responseAfterLogin(res)
-            this.$router.push({ name: "home" });
-
-        })
-        .catch(error =>console.log(error.response.data))
-
-      }
 
     },
-
+  },
 };
 </script>
 
 <style>
 .card-body {
-
   background-color: #050a14;
 }
 </style>
