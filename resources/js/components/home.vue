@@ -3,7 +3,7 @@
 
 
 <div class="container-fluid">
-                
+
             <div class="row">
                     <div class="col-lg-3 col-sm-6">
                         <div class="card">
@@ -69,6 +69,11 @@
 <script>
 export default {
 
+    created(){
+        if(!User.loggedIn()){
+            this.$router.push({name:"/"})
+        }
+    }
 }
 </script>
 
