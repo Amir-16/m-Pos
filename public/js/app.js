@@ -2170,8 +2170,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
-      axios.post("/api/auth/login", this.form).then(function (res) {
-        return User.responseAfterLogin(res);
+      var _this = this;
+
+      axios.post("/api/auth/login", this.form).then(function (response) {
+        User.responseAfterLogin(response);
+
+        _this.$router.push({
+          name: 'home'
+        });
       })["catch"](function (error) {
         return console.log(error.response.data);
       });
@@ -2531,28 +2537,25 @@ var User = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
-/* harmony import */ var _Helpers_User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Helpers/User */ "./resources/js/Helpers/User.js");
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _Helpers_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Helpers/User */ "./resources/js/Helpers/User.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
-
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // Router Imported
 
 
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Router Imported
 
-Window.User = _Helpers_User__WEBPACK_IMPORTED_MODULE_2__["default"];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+ //User Imported
+
+
+window.User = _Helpers_User__WEBPACK_IMPORTED_MODULE_3__["default"];
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _routes__WEBPACK_IMPORTED_MODULE_1__.routes
+  routes: _routes__WEBPACK_IMPORTED_MODULE_2__.routes
 });
-var app = new Vue({
+var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   el: '#app',
   router: router
 });
