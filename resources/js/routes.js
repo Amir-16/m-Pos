@@ -13,7 +13,7 @@ let logout = require('./components/auth/logout').default;
 
  export const routes = [
     { path: '/', component: login,name:'/' },
-    { path: '/register', component: register, name: 'register' },
+    { path: '/add-user', component: register, name: 'register' },
     { path: '/forget', component: forget, name: 'forget' },
      { path: '/dashboard', component: home, name: 'home' },
     {path:'/logout',component:logout, name:'logout'},

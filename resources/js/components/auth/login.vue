@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="authincation h-100">
     <div class="container-fluid h-100">
@@ -9,7 +7,7 @@
             <div class="row no-gutters">
               <div class="col-xl-12">
                 <div class="auth-form">
-                  <h4 class="text-center mb-4">Sign in System</h4>
+                  <h4 class="text-center mb-4">Login into m-Pos</h4>
                   <form action="" @submit.prevent="login">
                     <div class="form-group">
                       <label><strong>Email</strong></label>
@@ -19,7 +17,9 @@
                         class="form-control"
                         v-model="form.email"
                       />
-                      <small class="text-danger" v-if="errors.email">{{ errors.email[0]}}</small>
+                      <small class="text-danger" v-if="errors.email">{{
+                        errors.email[0]
+                      }}</small>
                     </div>
                     <div class="form-group">
                       <label><strong>Password</strong></label>
@@ -28,7 +28,9 @@
                         class="form-control"
                         v-model="form.password"
                       />
-                      <small class="text-danger" v-if="errors.password"> {{errors.password[0]}}</small>
+                      <small class="text-danger" v-if="errors.password">
+                        {{ errors.password[0] }}</small
+                      >
                     </div>
                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
                       <div class="form-group">
@@ -66,12 +68,11 @@
 
 <script>
 export default {
-
-   created(){
-       if(User.loggedIn()){
-           this.$router.push({name:"home"})
-       }
-   },
+  created() {
+    if (User.loggedIn()) {
+      this.$router.push({ name: "home" });
+    }
+  },
 
   data() {
     return {
@@ -79,31 +80,28 @@ export default {
         email: null,
         password: null,
       },
-      errors:{
-
-      }
+      errors: {},
     };
   },
   methods: {
     login() {
-      axios.post("/api/auth/login", this.form)
-      .then(response=> {
-            User.responseAfterLogin(response)
-            Toast.fire({
-                  icon: 'success',
-                  title: 'Signed in successfully'
-           })
-            this.$router.push({name:"home"})
-       })
-    .catch((error) => (this.errors = error.response.data.errors))
-    .catch(
-        Toast.fire({
-            icon:"warning",
-            title:'Email or Password Invalid'
+      axios
+        .post("/api/auth/login", this.form)
+        .then((response) => {
+          User.responseAfterLogin(response);
+          Toast.fire({
+            icon: "success",
+            title: "Signed in successfully",
+          });
+          this.$router.push({ name: "home" });
         })
-
-    );
-
+        .catch((error) => (this.errors = error.response.data.errors))
+        .catch(
+          Toast.fire({
+            icon: "warning",
+            title: "Email or Password Invalid",
+          })
+        );
     },
   },
 };

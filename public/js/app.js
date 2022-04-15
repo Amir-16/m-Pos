@@ -5355,6 +5355,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     if (User.loggedIn()) {
@@ -5379,8 +5381,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/auth/login", this.form).then(function (response) {
         User.responseAfterLogin(response);
         Toast.fire({
-          icon: 'success',
-          title: 'Signed in successfully'
+          icon: "success",
+          title: "Signed in successfully"
         });
 
         _this.$router.push({
@@ -5390,7 +5392,7 @@ __webpack_require__.r(__webpack_exports__);
         return _this.errors = error.response.data.errors;
       })["catch"](Toast.fire({
         icon: "warning",
-        title: 'Email or Password Invalid'
+        title: "Email or Password Invalid"
       }));
     }
   }
@@ -5896,7 +5898,7 @@ var routes = [{
   component: login,
   name: '/'
 }, {
-  path: '/register',
+  path: '/add-user',
   component: register,
   name: 'register'
 }, {
@@ -32628,7 +32630,7 @@ var render = function () {
                 _c("div", { staticClass: "col-xl-12" }, [
                   _c("div", { staticClass: "auth-form" }, [
                     _c("h4", { staticClass: "text-center mb-4" }, [
-                      _vm._v("Sign in System"),
+                      _vm._v("Login into m-Pos"),
                     ]),
                     _vm._v(" "),
                     _c(
@@ -32709,7 +32711,10 @@ var render = function () {
                           _vm._v(" "),
                           _vm.errors.password
                             ? _c("small", { staticClass: "text-danger" }, [
-                                _vm._v(" " + _vm._s(_vm.errors.password[0])),
+                                _vm._v(
+                                  "\n                      " +
+                                    _vm._s(_vm.errors.password[0])
+                                ),
                               ])
                             : _vm._e(),
                         ]),
@@ -32842,7 +32847,7 @@ var render = function () {
                 _c("div", { staticClass: "col-xl-12" }, [
                   _c("div", { staticClass: "auth-form" }, [
                     _c("h4", { staticClass: "text-center mb-4" }, [
-                      _vm._v("Sign up your account"),
+                      _vm._v("Add User"),
                     ]),
                     _vm._v(" "),
                     _vm._m(0),

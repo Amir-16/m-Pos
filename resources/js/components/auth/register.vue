@@ -7,7 +7,7 @@
             <div class="row no-gutters">
               <div class="col-xl-12">
                 <div class="auth-form">
-                  <h4 class="text-center mb-4">Sign up your account</h4>
+                  <h4 class="text-center mb-4">Add User</h4>
                   <form action="index.html">
                     <div class="form-group">
                       <label><strong>Username</strong></label>
