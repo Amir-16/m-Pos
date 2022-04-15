@@ -29,6 +29,8 @@ const Toast = Swal.mixin({
   }
 })
 
+window.Toast = Toast;
+
 
 //end sweetalert2
 const router = new VueRouter({

@@ -19,6 +19,7 @@
                         class="form-control"
                         v-model="form.email"
                       />
+                      <small class="text-danger" v-if="errors.email">{{ errors.email[0]}}</small>
                     </div>
                     <div class="form-group">
                       <label><strong>Password</strong></label>
@@ -27,6 +28,7 @@
                         class="form-control"
                         v-model="form.password"
                       />
+                      <small class="text-danger" v-if="errors.password"> {{errors.password[0]}}</small>
                     </div>
                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
                       <div class="form-group">
@@ -77,6 +79,9 @@ export default {
         email: null,
         password: null,
       },
+      errors:{
+
+      }
     };
   },
   methods: {
@@ -90,8 +95,14 @@ export default {
            })
             this.$router.push({name:"home"})
        })
-      .catch(error=>console.log(error.response.data))
+    .catch((error) => (this.errors = error.response.data.errors))
+    .catch(
+        Toast.fire({
+            icon:"warning",
+            title:'Email or Password Invalid'
+        })
 
+    );
 
     },
   },
