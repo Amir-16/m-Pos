@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\SupplierController;
 Route::group([
 
     'middleware' => 'api',
@@ -18,3 +18,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+
+
+
+Route::apiResource('supplier', 'App\Http\Controllers\Api\SupplierController');

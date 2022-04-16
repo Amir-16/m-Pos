@@ -48,8 +48,8 @@
                     </div>
                     =
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary btn-block">
-                        Sign me in
+                      <button type="submit" class="btn btn-success btn-block">
+                        Sign  in
                       </button>
                     </div>
                   </form>
