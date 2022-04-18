@@ -30,7 +30,7 @@
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"> Add Supplier</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Add Supplier</h5>
                       <button
                         type="button"
                         class="close"
@@ -41,8 +41,89 @@
                       </button>
                     </div>
                     <div class="modal-body">
+                      <form
+                        class="user"
+                        @submit.prevent="supplierInsert"
+                        enctype="multipart/form-data"
+                      >
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="">Supplier Name</label>
+                            <input
+                              type="text"
+                              v-model="form.name"
+                              class="form-control"
+                              value=""
+                              placeholder="Enter Supplier Name"
+                            />
+                            <small class="text-danger" v-if="errors.name">
+                              {{ errors.name[0] }}</small
+                            >
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="">Email</label>
+                            <input
+                              type="email"
+                              v-model="form.email"
+                              class="form-control"
+                              value=""
+                              placeholder="Enter Supplier Email"
+                            />
+                            <small class="text-danger" v-if="errors.email"> {{errors.email[0]}}</small>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="">Mobile No</label>
+                            <input
+                              type="text"
+                              v-model="form.mobileno"
+                              class="form-control"
+                              value=""
+                              placeholder="Enter Supplier Mobile No"
+                            />
+                             <small class="text-danger" v-if="errors.mobileno"> {{errors.mobileno[0]}}</small>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="">Address</label>
+                            <input
+                              type="text"
+                              v-model="form.address"
+                              class="form-control"
+                              value=""
+                              placeholder="Enter Supplier Address"
+                            />
+                             <small class="text-danger" v-if="errors.address"> {{errors.address[0]}}</small>
+                          </div>
+                          <div class="form-group col-md-5">
+                            <label for="">Business Name</label>
+                            <input
+                              type="text"
+                              v-model="form.businessName"
+                              class="form-control"
+                              value=""
+                              placeholder="Enter Business Name"
+                            />
+                             <small class="text-danger" v-if="errors.businessName"> {{errors.businessName[0]}}</small>
+                          </div>
+                          <div class="form-group col-md-5">
+                            <label for="">Image</label>
+                            <input
+                              type="file"
+                              @change="onFileSelected"
+                              class="form-control"
 
+                            />
+                          </div>
 
+                          <div class="form-group col-md-2">
+                            <label for="">View Image</label>
+                            <img style="height: 40px; width: 40px" />
+                          </div>
+
+                            <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+                    </div>
+                        </div>
+                      </form>
                     </div>
                     <div class="modal-footer">
                       <button
@@ -89,7 +170,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Supplier List</h6>
           </div>
           <div class="table-responsive">
-            <table class="table align-items-center table-flush">
+            <table id="example1" class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
                   <th>Name</th>
@@ -104,7 +185,7 @@
                 <tr v-for="supplier in filtersearch" :key="supplier.id">
                   <td>{{ supplier.name }}</td>
                   <td><img :src="supplier.image" id="em_image" /></td>
-                  <td>{{ supplier.phone }}</td>
+                  <td>{{ supplier.mobileNo }}</td>
                   <td>{{ supplier.shopname }}</td>
                   <td>{{ supplier.email }}</td>
                   <td>
@@ -139,8 +220,17 @@ export default {
   },
   data() {
     return {
+      form: {
+        name: "",
+        email: "",
+        mobileNo: "",
+        address: "",
+        businessName: "",
+        image: "",
+      },
       suppliers: [],
       searchTerm: "",
+      errors: {},
     };
   },
   computed: {
@@ -157,6 +247,14 @@ export default {
         .get("/api/supplier/")
         .then(({ data }) => (this.suppliers = data))
         .catch();
+    },
+    supplierInsert(){
+        axios.post('/api/supplier',this.form)
+        .then(() => {
+        this.$router.push({name:'supplier'})
+      //  Notification.success()
+        })
+        .catch(error =>this.errors =error.response.data.errors)
     },
     deleteSupplier(id) {
       Swal.fire({
