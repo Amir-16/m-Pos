@@ -25,20 +25,22 @@
                 tabindex="-1"
                 role="dialog"
                 aria-labelledby="myLargeModalLabel"
-                aria-hidden="true"
+                aria-hidden="true" id="supplier-add-modal"
               >
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Add Supplier</h5>
-                      <button
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Add Supplier
+                      </h5>
+                      <!-- <button
                         type="button"
                         class="close"
                         data-dismiss="modal"
                         aria-label="Close"
                       >
                         <span aria-hidden="true">&times;</span>
-                      </button>
+                      </button> -->
                     </div>
                     <div class="modal-body">
                       <form
@@ -69,7 +71,9 @@
                               value=""
                               placeholder="Enter Supplier Email"
                             />
-                            <small class="text-danger" v-if="errors.email"> {{errors.email[0]}}</small>
+                            <small class="text-danger" v-if="errors.email">
+                              {{ errors.email[0] }}</small
+                            >
                           </div>
                           <div class="form-group col-md-6">
                             <label for="">Mobile No</label>
@@ -80,7 +84,9 @@
                               value=""
                               placeholder="Enter Supplier Mobile No"
                             />
-                             <small class="text-danger" v-if="errors.mobileno"> {{errors.mobileno[0]}}</small>
+                            <small class="text-danger" v-if="errors.mobileno">
+                              {{ errors.mobileno[0] }}</small
+                            >
                           </div>
                           <div class="form-group col-md-6">
                             <label for="">Address</label>
@@ -91,7 +97,9 @@
                               value=""
                               placeholder="Enter Supplier Address"
                             />
-                             <small class="text-danger" v-if="errors.address"> {{errors.address[0]}}</small>
+                            <small class="text-danger" v-if="errors.address">
+                              {{ errors.address[0] }}</small
+                            >
                           </div>
                           <div class="form-group col-md-5">
                             <label for="">Business Name</label>
@@ -102,7 +110,12 @@
                               value=""
                               placeholder="Enter Business Name"
                             />
-                             <small class="text-danger" v-if="errors.businessName"> {{errors.businessName[0]}}</small>
+                            <small
+                              class="text-danger"
+                              v-if="errors.businessName"
+                            >
+                              {{ errors.businessName[0] }}</small
+                            >
                           </div>
                           <div class="form-group col-md-5">
                             <label for="">Image</label>
@@ -110,7 +123,6 @@
                               type="file"
                               @change="onFileSelected"
                               class="form-control"
-
                             />
                           </div>
 
@@ -119,9 +131,14 @@
                             <img style="height: 40px; width: 40px" />
                           </div>
 
-                            <div class="form-group col-md-4">
-                    <button type="submit" class="btn btn-primary btn-block">Save</button>
-                    </div>
+                          <div class="form-group col-md-4">
+                            <button
+                              type="submit"
+                              class="btn btn-primary btn-block"
+                            >
+                              Save
+                            </button>
+                          </div>
                         </div>
                       </form>
                     </div>
@@ -133,7 +150,7 @@
                       >
                         Close
                       </button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <!-- <button type="submit" class="btn btn-primary">Save changes</button> -->
                     </div>
                     ...
                   </div>
@@ -165,7 +182,14 @@
         <!-- Simple Tables -->
         <div class="card">
           <div
-            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+            class="
+              card-header
+              py-3
+              d-flex
+              flex-row
+              align-items-center
+              justify-content-between
+            "
           >
             <h6 class="m-0 font-weight-bold text-primary">Supplier List</h6>
           </div>
@@ -176,7 +200,7 @@
                   <th>Name</th>
                   <th>image</th>
                   <th>Phone</th>
-                  <th>Shop Name</th>
+                  <th>Business Name</th>
                   <th>Email</th>
                   <th>Action</th>
                 </tr>
@@ -185,17 +209,22 @@
                 <tr v-for="supplier in filtersearch" :key="supplier.id">
                   <td>{{ supplier.name }}</td>
                   <td><img :src="supplier.image" id="em_image" /></td>
-                  <td>{{ supplier.mobileNo }}</td>
-                  <td>{{ supplier.shopname }}</td>
+                  <td>{{ supplier.mobileno }}</td>
+                  <td>{{ supplier.businessName }}</td>
                   <td>{{ supplier.email }}</td>
                   <td>
                     <router-link
-                      :to="{ name: 'edit-supplier', params: { id: supplier.id } }"
+                      :to="{
+                        name: 'edit-supplier',
+                        params: { id: supplier.id },
+                      }"
                       class="btn btn-sm btn-primary"
                       >Edit</router-link
                     >
 
-                    <a @click="deleteSupplier(supplier.id)" class="btn btn-sm btn-danger"
+                    <a
+                      @click="deleteSupplier(supplier.id)"
+                      class="btn btn-sm btn-danger"
                       ><font color="#ffffff">Delete</font></a
                     >
                   </td>
@@ -223,7 +252,7 @@ export default {
       form: {
         name: "",
         email: "",
-        mobileNo: "",
+        mobileno: "",
         address: "",
         businessName: "",
         image: "",
@@ -242,19 +271,37 @@ export default {
   },
 
   methods: {
+    onFileSelected(event) {
+      let file = event.target.files[0];
+      if (file.size > 1048770) {
+        Notification.image_validation();
+      } else {
+        let reader = new FileReader();
+        reader.onload = (event) => {
+          this.form.image = event.target.result;
+          console.log(event.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
     allSupplier() {
       axios
         .get("/api/supplier/")
         .then(({ data }) => (this.suppliers = data))
         .catch();
     },
-    supplierInsert(){
-        axios.post('/api/supplier',this.form)
+    supplierInsert() {
+    //  alert("ok");
+      axios
+        .post("/api/supplier", this.form)
         .then(() => {
-        this.$router.push({name:'supplier'})
-      //  Notification.success()
+
+          this.$router.push({ name: "supplier" });
+           // $("#supplier-add-modal").modal("hide");
+
+          //  Notification.success()
         })
-        .catch(error =>this.errors =error.response.data.errors)
+        .catch((error) => (this.errors = error.response.data.errors));
     },
     deleteSupplier(id) {
       Swal.fire({

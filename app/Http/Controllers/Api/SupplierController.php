@@ -32,7 +32,7 @@ class SupplierController extends Controller
         $validateData = $request->validate([
             'name' => 'required|unique:suppliers|max:255',
             'email' => 'required',
-            'phone' => 'required|unique:suppliers',
+            'mobileno' => 'required|unique:suppliers',
 
         ]);
 
@@ -52,9 +52,9 @@ class SupplierController extends Controller
         }
             $supplier->name = $request->name;
             $supplier->email = $request->email;
-            $supplier->phone = $request->phone;
-            $supplier->shopname = $request->shopname;
+            $supplier->mobileno = $request->mobileno;
             $supplier->address = $request->address;
+             $supplier->businessName = $request->businessName;
             $supplier->save();
    }
 

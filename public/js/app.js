@@ -6247,6 +6247,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
   created: function created() {
     if (!User.loggedIn()) {
@@ -6260,7 +6289,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       form: {
         name: "",
         email: "",
-        mobileNo: "",
+        mobileno: "",
         address: "",
         businessName: "",
         image: ""
@@ -6280,28 +6309,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
-    allSupplier: function allSupplier() {
+    onFileSelected: function onFileSelected(event) {
       var _this2 = this;
+
+      var file = event.target.files[0];
+
+      if (file.size > 1048770) {
+        Notification.image_validation();
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          _this2.form.image = event.target.result;
+          console.log(event.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    allSupplier: function allSupplier() {
+      var _this3 = this;
 
       axios.get("/api/supplier/").then(function (_ref) {
         var data = _ref.data;
-        return _this2.suppliers = data;
+        return _this3.suppliers = data;
       })["catch"]();
     },
     supplierInsert: function supplierInsert() {
-      var _this3 = this;
+      var _this4 = this;
 
-      axios.post('/api/supplier', this.form).then(function () {
-        _this3.$router.push({
-          name: 'supplier'
-        }); //  Notification.success()
+      //  alert("ok");
+      axios.post("/api/supplier", this.form).then(function () {
+        _this4.$router.push({
+          name: "supplier"
+        }); // $("#supplier-add-modal").modal("hide");
+        //  Notification.success()
 
       })["catch"](function (error) {
-        return _this3.errors = error.response.data.errors;
+        return _this4.errors = error.response.data.errors;
       });
     },
     deleteSupplier: function deleteSupplier(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       Swal.fire({
         title: "Are you sure?",
@@ -6314,11 +6363,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (result) {
         if (result.value) {
           axios["delete"]("/api/supplier/" + id).then(function () {
-            _this4.suppliers = _this4.suppliers.filter(function (supplier) {
+            _this5.suppliers = _this5.suppliers.filter(function (supplier) {
               return supplier.id != id;
             });
           })["catch"](function () {
-            _this4.$router.push({
+            _this5.$router.push({
               name: "supplier"
             });
           });
@@ -34850,6 +34899,7 @@ var render = function () {
                     role: "dialog",
                     "aria-labelledby": "myLargeModalLabel",
                     "aria-hidden": "true",
+                    id: "supplier-add-modal",
                   },
                 },
                 [
@@ -34969,7 +35019,8 @@ var render = function () {
                                         { staticClass: "text-danger" },
                                         [
                                           _vm._v(
-                                            " " + _vm._s(_vm.errors.email[0])
+                                            "\n                            " +
+                                              _vm._s(_vm.errors.email[0])
                                           ),
                                         ]
                                       )
@@ -35021,7 +35072,8 @@ var render = function () {
                                         { staticClass: "text-danger" },
                                         [
                                           _vm._v(
-                                            " " + _vm._s(_vm.errors.mobileno[0])
+                                            "\n                            " +
+                                              _vm._s(_vm.errors.mobileno[0])
                                           ),
                                         ]
                                       )
@@ -35073,7 +35125,8 @@ var render = function () {
                                         { staticClass: "text-danger" },
                                         [
                                           _vm._v(
-                                            " " + _vm._s(_vm.errors.address[0])
+                                            "\n                            " +
+                                              _vm._s(_vm.errors.address[0])
                                           ),
                                         ]
                                       )
@@ -35125,7 +35178,7 @@ var render = function () {
                                         { staticClass: "text-danger" },
                                         [
                                           _vm._v(
-                                            " " +
+                                            "\n                            " +
                                               _vm._s(_vm.errors.businessName[0])
                                           ),
                                         ]
@@ -35205,7 +35258,10 @@ var render = function () {
           _c("div", { staticClass: "table-responsive" }, [
             _c(
               "table",
-              { staticClass: "table align-items-center table-flush" },
+              {
+                staticClass: "table align-items-center table-flush",
+                attrs: { id: "example1" },
+              },
               [
                 _vm._m(6),
                 _vm._v(" "),
@@ -35221,9 +35277,9 @@ var render = function () {
                         }),
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(supplier.mobileNo))]),
+                      _c("td", [_vm._v(_vm._s(supplier.mobileno))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(supplier.shopname))]),
+                      _c("td", [_vm._v(_vm._s(supplier.businessName))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(supplier.email))]),
                       _vm._v(" "),
@@ -35295,20 +35351,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Add Supplier")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close",
-          },
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        [_vm._v("\n                      Add Supplier\n                    ")]
       ),
     ])
   },
@@ -35330,7 +35373,11 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary btn-block", attrs: { type: "submit" } },
-        [_vm._v("Save")]
+        [
+          _vm._v(
+            "\n                            Save\n                          "
+          ),
+        ]
       ),
     ])
   },
@@ -35347,12 +35394,6 @@ var staticRenderFns = [
         },
         [_vm._v("\n                      Close\n                    ")]
       ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
-      ),
     ])
   },
   function () {
@@ -35363,7 +35404,7 @@ var staticRenderFns = [
       "div",
       {
         staticClass:
-          "card-header py-3 d-flex flex-row align-items-center justify-content-between",
+          "\n            card-header\n            py-3\n            d-flex\n            flex-row\n            align-items-center\n            justify-content-between\n          ",
       },
       [
         _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
@@ -35384,7 +35425,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Phone")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Shop Name")]),
+        _c("th", [_vm._v("Business Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
         _vm._v(" "),
